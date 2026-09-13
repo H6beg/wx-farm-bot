@@ -512,6 +512,115 @@ function mountAccountRoutes(app: Application, ctx: AdminContext): void {
             handleApiError(res, e);
         }
     });
+
+    // API: 获取微信自动刷新 Code 状态
+    app.get('/api/wechat-auto-refresh-status', (req: Request, res: Response) => {
+        try {
+            const accountList = getAccountList(ctx);
+            const refreshStatuses = accountList.map((account: any) => {
+                const cfg = ctx.provider.getAutoCodeRefreshConfig 
+                    ? ctx.provider.getAutoCodeRefreshConfig(account.id)
+                    : { enabled: false, intervalMinutes: 60 };
+                
+                const lastRefreshInfo = ctx.provider.getLastAutoCodeRefreshInfo
+                    ? ctx.provider.getLastAutoCodeRefreshInfo(account.id)
+                    : {};
+
+                return {
+                    accountId: account.id,
+                    accountName: account.name || '',
+                    platform: account.platform || 'qq',
+                    enabled: cfg?.enabled === true || false,
+                    intervalMinutes: Math.max(1, Math.min(1440, Number(cfg?.intervalMinutes) || 60)),
+                    lastRefreshTime: lastRefreshInfo.lastRefreshTime || null,
+                    lastRefreshStatus: lastRefreshInfo.lastRefreshStatus || null,
+                    lastRefreshError: lastRefreshInfo.lastRefreshError || null,
+                    nextRefreshTime: lastRefreshInfo.nextRefreshTime || null,
+                };
+            });
+            res.json({ ok: true, data: refreshStatuses });
+        } catch (e: any) {
+            handleApiError(res, e);
+        }
+    });
+
+    // API: 更新微信自动刷新 Code 配置
+    app.post('/api/wechat-auto-refresh/:accountId', (req: Request, res: Response) => {
+        try {
+            const accountId = resolveAccId(ctx, req.params.accountId) || String(req.params.accountId || '');
+            const body = (req.body && typeof req.body === 'object') ? req.body : {};
+
+            const accountList = getAccountList(ctx);
+            const account = accountList.find((acc: any) => String(acc.id) === String(accountId));
+            
+            if (!account) {
+                return res.status(404).json({ ok: false, error: 'Account not found' });
+            }
+
+            if (account.platform !== 'wx') {
+                return res.status(400).json({ ok: false, error: 'Only WeChat accounts support auto refresh' });
+            }
+
+            const config = {
+                enabled: body.enabled === true || false,
+                intervalMinutes: body.intervalMinutes 
+                    ? Math.max(1, Math.min(1440, Number(body.intervalMinutes)))
+                    : 60,
+            };
+
+            if (ctx.provider.setAutoCodeRefreshConfig && typeof ctx.provider.setAutoCodeRefreshConfig === 'function') {
+                ctx.provider.setAutoCodeRefreshConfig(accountId, config);
+            }
+
+            if (ctx.provider.addAccountLog) {
+                const status = config.enabled ? '启用' : '禁用';
+                ctx.provider.addAccountLog(
+                    'wechat_auto_refresh_config',
+                    `${status}微信自动刷新 Code，间隔: ${config.intervalMinutes} 分钟`,
+                    accountId,
+                    account.name || ''
+                );
+            }
+
+            res.json({ ok: true, data: { ...config, accountId, accountName: account.name } });
+        } catch (e: any) {
+            handleApiError(res, e);
+        }
+    });
+
+    // API: 立即刷新微信 Code
+    app.post('/api/wechat-auto-refresh/:accountId/refresh-now', (req: Request, res: Response) => {
+        try {
+            const accountId = resolveAccId(ctx, req.params.accountId) || String(req.params.accountId || '');
+            const accountList = getAccountList(ctx);
+            const account = accountList.find((acc: any) => String(acc.id) === String(accountId));
+            
+            if (!account) {
+                return res.status(404).json({ ok: false, error: 'Account not found' });
+            }
+
+            if (account.platform !== 'wx') {
+                return res.status(400).json({ ok: false, error: 'Only WeChat accounts support auto refresh' });
+            }
+
+            if (ctx.provider.triggerAutoCodeRefresh && typeof ctx.provider.triggerAutoCodeRefresh === 'function') {
+                ctx.provider.triggerAutoCodeRefresh(accountId, 'manual');
+            }
+
+            if (ctx.provider.addAccountLog) {
+                ctx.provider.addAccountLog(
+                    'wechat_manual_refresh',
+                    '手动触发微信 Code 刷新',
+                    accountId,
+                    account.name || ''
+                );
+            }
+
+            res.json({ ok: true, data: { accountId, accountName: account.name, status: 'triggered' } });
+        } catch (e: any) {
+            handleApiError(res, e);
+        }
+    });
 }
 
 module.exports = { mountAccountRoutes };

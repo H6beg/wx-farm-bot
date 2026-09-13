@@ -10,6 +10,7 @@ import AccountModal from '@/components/AccountModal.vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import AutomationSettingsForm from '@/components/settings/AutomationSettingsForm.vue'
 import BagSeedPriorityItem from '@/components/settings/BagSeedPriorityItem.vue'
+import WechatAutoRefreshSettings from '@/components/settings/WechatAutoRefreshSettings.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseSelect from '@/components/ui/BaseSelect.vue'
@@ -1874,35 +1875,40 @@ async function handleResetSystemConfig() {
         </div>
 
         <!-- 自动控制 -->
-        <div v-else-if="activeTab === 'automation'" class="space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg text-gray-900 font-bold dark:text-gray-100">
-              自动控制
-              <span v-if="currentAccountName" class="ml-2 text-sm text-gray-500 font-normal dark:text-gray-400">
-                ({{ currentAccountName }})
-              </span>
-            </h3>
-          </div>
+         <div v-else-if="activeTab === 'automation'" class="space-y-4">
+           <div class="flex items-center justify-between">
+             <h3 class="text-lg text-gray-900 font-bold dark:text-gray-100">
+               自动控制
+               <span v-if="currentAccountName" class="ml-2 text-sm text-gray-500 font-normal dark:text-gray-400">
+                 ({{ currentAccountName }})
+               </span>
+             </h3>
+           </div>
 
-          <div v-if="settingsLoading" class="py-4 text-center text-gray-500">
-            <span class="i-carbon-circle-dash mx-auto mb-2 inline-block animate-spin text-2xl" />
-            <p>加载中...</p>
-          </div>
+           <div v-if="settingsLoading" class="py-4 text-center text-gray-500">
+             <span class="i-carbon-circle-dash mx-auto mb-2 inline-block animate-spin text-2xl" />
+             <p>加载中...</p>
+           </div>
 
-          <div v-else-if="!currentAccountId || loadedAccountId !== currentAccountId" class="py-8 text-center text-gray-500">
-            <div class="i-carbon-settings mx-auto mb-2 text-3xl text-gray-400" />
-            <p>{{ currentAccountId ? '账号设置加载失败，请切换账号或刷新页面重试' : '请先选择账号' }}</p>
-          </div>
+           <div v-else-if="!currentAccountId || loadedAccountId !== currentAccountId" class="py-8 text-center text-gray-500">
+             <div class="i-carbon-settings mx-auto mb-2 text-3xl text-gray-400" />
+             <p>{{ currentAccountId ? '账号设置加载失败，请切换账号或刷新页面重试' : '请先选择账号' }}</p>
+           </div>
 
-          <AutomationSettingsForm
-            v-else
-            v-model="localAutomationSettings"
-            :saving="automationSaving"
-            :fertilizer-land-type-options="fertilizerLandTypeOptions"
-            :fertilizer-options="fertilizerOptions"
-            @save="saveAutomationSettings"
-          />
-        </div>
+           <template v-else>
+             <!-- 微信自动刷新 Code 设置 -->
+             <WechatAutoRefreshSettings />
+
+             <!-- 常规自动控制设置 -->
+             <AutomationSettingsForm
+               v-model="localAutomationSettings"
+               :saving="automationSaving"
+               :fertilizer-land-type-options="fertilizerLandTypeOptions"
+               :fertilizer-options="fertilizerOptions"
+               @save="saveAutomationSettings"
+             />
+           </template>
+         </div>
 
         <!-- 系统设置 -->
         <div v-else-if="activeTab === 'system'" class="space-y-4">
