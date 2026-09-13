@@ -2,7 +2,14 @@ import crypto from 'node:crypto';
 import type { Application, Request, Response } from 'express';
 import type { AdminContext } from './context';
 import { WxLoginService } from '../../services/wx-login/service';
-import type { ScanStatus, WxLoginSession } from '../../services/wx-login/service';
+
+// 定义类型（从 service 中推断）
+type ScanStatus = 'waiting' | 'scanned' | 'authorized' | 'cancelled' | 'expired';
+interface WxLoginSession {
+  uuid?: string;
+  cookies?: Map<string, string>;
+  [key: string]: any;
+}
 
 export {};
 
