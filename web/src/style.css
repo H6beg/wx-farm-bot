@@ -28,9 +28,9 @@ textarea * {
   color-scheme: light;
   --ui-bg: #f3f5ef;
   --ui-bg-soft: #eef2eb;
-  --ui-surface: rgba(255, 255, 255, 0.78);
-  --ui-surface-strong: rgba(255, 255, 255, 0.92);
-  --ui-surface-soft: rgba(239, 245, 238, 0.8);
+  --ui-surface: rgba(255, 255, 255, 0.55);
+  --ui-surface-strong: rgba(255, 255, 255, 0.72);
+  --ui-surface-soft: rgba(239, 245, 238, 0.55);
   --ui-border: rgba(58, 86, 68, 0.13);
   --ui-border-strong: rgba(58, 86, 68, 0.2);
   --ui-ink: #243028;
@@ -81,14 +81,16 @@ textarea * {
   --theme-sun: #f0c040;
   --theme-gold: #f0c040;
   --theme-wheat: #deb887;
-  --glass-panel: rgba(250, 251, 247, 0.78);
+  --glass-panel: rgba(250, 251, 247, 0.6);
   --glass-card: var(--ui-surface);
   --glass-elevated: var(--ui-surface-strong);
-  --glass-input: rgba(255, 255, 255, 0.7);
+  --glass-input: rgba(255, 255, 255, 0.55);
   --glass-border: var(--ui-border);
   --glass-highlight: rgba(255, 255, 255, 0.9);
   --glass-muted: var(--ui-muted);
   --glass-shadow: var(--ui-shadow-lg);
+  --glass-blur: blur(18px) saturate(150%);
+  --glass-blur-strong: blur(26px) saturate(160%);
 }
 
 ::-webkit-scrollbar-track {
@@ -142,8 +144,55 @@ body {
 }
 
 .app-shell {
+  position: relative;
+  isolation: isolate;
   color: var(--ui-ink);
   background: var(--ui-bg);
+}
+
+/* Aurora background layer — 液态玻璃需要有流动的内容可透 */
+.app-shell::before {
+  content: '';
+  position: fixed;
+  inset: -20% -10% -10% -10%;
+  z-index: -2;
+  background:
+    radial-gradient(42% 48% at 18% 22%, rgba(91, 164, 149, 0.42) 0%, transparent 62%),
+    radial-gradient(38% 44% at 82% 18%, rgba(92, 143, 168, 0.36) 0%, transparent 60%),
+    radial-gradient(46% 52% at 72% 82%, rgba(67, 141, 99, 0.40) 0%, transparent 64%),
+    radial-gradient(40% 46% at 26% 84%, rgba(143, 121, 188, 0.30) 0%, transparent 62%);
+  background-size: 200% 200%;
+  filter: blur(20px) saturate(128%);
+  animation: aurora-drift 24s ease-in-out infinite alternate;
+  will-change: background-position, transform;
+}
+
+/* Fine grain overlay to keep the frosted surfaces from banding */
+.app-shell::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.5) 0.5px, transparent 0.5px);
+  background-size: 4px 4px;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+}
+
+@keyframes aurora-drift {
+  0% {
+    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    background-position: 40% 30%, 60% 40%, 55% 60%, 45% 55%;
+    transform: translate3d(0, -1.5%, 0) rotate(0.4deg) scale(1.04);
+  }
+  100% {
+    background-position: 100% 100%, 0% 100%, 0% 0%, 100% 0%;
+    transform: translate3d(0, 1%, 0) rotate(-0.4deg) scale(1.02);
+  }
 }
 
 .liquid-layout,
@@ -208,20 +257,31 @@ body {
 
 /* Legacy aliases kept while feature pages move to framework components. */
 .cartoon-card:not(.land-card) {
+  position: relative;
   border: 1px solid var(--glass-border) !important;
   border-radius: var(--ui-radius-card) !important;
   background: var(--glass-card) !important;
-  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--ui-shadow-sm) !important;
-  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28),
+    var(--ui-shadow-md) !important;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .cartoon-card:not(.land-card):hover {
   border-color: color-mix(in srgb, var(--theme-primary) 34%, var(--glass-border)) !important;
-  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--theme-shadow-md) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.32),
+    var(--theme-shadow-lg) !important;
+  transform: translateY(-1px);
 }
 
 .cartoon-card:not(.land-card):active {
   box-shadow: inset 0 1px 0 var(--glass-highlight), var(--theme-shadow-sm) !important;
+  transform: translateY(0);
 }
 
 .farm-card,
@@ -229,18 +289,30 @@ body {
   border: 1px solid var(--glass-border) !important;
   border-radius: var(--ui-radius-card) !important;
   background: var(--glass-card) !important;
-  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--ui-shadow-sm) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28),
+    var(--ui-shadow-md) !important;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
 }
 
 .farm-input {
   border-color: var(--glass-border) !important;
   background: var(--glass-input) !important;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 .n-card {
   border-color: var(--glass-border) !important;
   background-color: var(--glass-card) !important;
-  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--ui-shadow-sm);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28),
+    var(--ui-shadow-md);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
 }
 
 .n-modal,
@@ -250,9 +322,12 @@ body {
 .n-dropdown-menu {
   border: 1px solid var(--glass-border) !important;
   background-color: var(--glass-elevated) !important;
-  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(150%);
-  backdrop-filter: blur(22px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3),
+    var(--glass-shadow) !important;
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  backdrop-filter: var(--glass-blur-strong);
 }
 
 .n-input,
