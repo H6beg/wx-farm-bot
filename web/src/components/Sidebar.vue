@@ -775,17 +775,17 @@ async function copyToken() {
 <style scoped>
 .app-sidebar {
   color: var(--ui-ink);
-  border-right: 1px solid var(--ui-border);
-  background: rgba(250, 251, 247, 0.62);
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.28);
   box-shadow:
-    10px 0 40px rgba(55, 75, 61, 0.08),
-    inset -1px 0 0 rgba(255, 255, 255, 0.55),
-    inset 1px 0 0 rgba(255, 255, 255, 0.6);
+    10px 0 44px rgba(45, 70, 55, 0.1),
+    inset -1px 0 0 rgba(255, 255, 255, 0.4),
+    inset 1px 0 0 rgba(255, 255, 255, 0.55);
   transition:
     transform 0.2s ease,
     width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  -webkit-backdrop-filter: blur(28px) saturate(155%);
-  backdrop-filter: blur(28px) saturate(155%);
+  -webkit-backdrop-filter: blur(32px) saturate(175%);
+  backdrop-filter: blur(32px) saturate(175%);
 }
 
 .sidebar-brand {

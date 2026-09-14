@@ -92,15 +92,15 @@ function toggleNavigation() {
   gap: 12px;
   margin: 8px 10px 0;
   padding: 8px 9px 8px 13px;
-  border: 1px solid var(--ui-border);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 18px;
-  background: rgba(250, 251, 247, 0.6);
+  background: rgba(255, 255, 255, 0.3);
   box-shadow:
-    var(--ui-shadow-md),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
-  -webkit-backdrop-filter: blur(26px) saturate(160%);
-  backdrop-filter: blur(26px) saturate(160%);
+    0 10px 32px rgba(45, 70, 55, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(30px) saturate(175%);
+  backdrop-filter: blur(30px) saturate(175%);
 }
 
 .mobile-heading {

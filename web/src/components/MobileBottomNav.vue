@@ -34,14 +34,15 @@ const items = [
   grid-template-columns: repeat(5, minmax(0, 1fr));
   min-height: 66px;
   padding: 7px 8px;
-  border: 1px solid rgba(58, 86, 68, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 24px;
-  background: rgba(250, 251, 247, 0.84);
+  background: rgba(255, 255, 255, 0.28);
   box-shadow:
-    0 16px 42px rgba(55, 75, 61, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-  -webkit-backdrop-filter: blur(22px) saturate(135%);
-  backdrop-filter: blur(22px) saturate(135%);
+    0 16px 44px rgba(45, 70, 55, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(30px) saturate(175%);
+  backdrop-filter: blur(30px) saturate(175%);
 }
 
 @media (max-width: 1023px) {
