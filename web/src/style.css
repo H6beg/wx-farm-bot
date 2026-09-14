@@ -26,39 +26,40 @@ textarea * {
 
 :root {
   color-scheme: light;
-  --ui-bg: #eaf0ea;
-  --ui-bg-soft: #e4ece6;
-  --ui-surface: rgba(255, 255, 255, 0.32);
-  --ui-surface-strong: rgba(255, 255, 255, 0.46);
-  --ui-surface-soft: rgba(255, 255, 255, 0.22);
-  --ui-border: rgba(58, 86, 68, 0.13);
-  --ui-border-strong: rgba(58, 86, 68, 0.2);
-  --ui-ink: #243028;
-  --ui-muted: #6d776f;
-  --ui-subtle: #929b94;
-  --ui-primary: #438d63;
-  --ui-primary-soft: #e4f1e7;
-  --ui-teal: #5ba495;
-  --ui-warning: #c58b3f;
-  --ui-warning-soft: #fbf2e3;
-  --ui-danger: #c95f66;
-  --ui-danger-soft: #fae9ea;
-  --ui-violet: #8f79bc;
-  --ui-violet-soft: #f0edf8;
-  --ui-blue: #5c8fa8;
-  --ui-blue-soft: #eaf2f5;
-  --ui-radius-control: 10px;
-  --ui-radius-card: 8px;
-  --ui-shadow-sm: 0 3px 14px rgba(55, 75, 61, 0.06);
-  --ui-shadow-md: 0 12px 32px rgba(55, 75, 61, 0.1);
-  --ui-shadow-lg: 0 24px 64px rgba(55, 75, 61, 0.15);
+  /* WeChat 风格配色：浅灰背景 + 白卡片 + 微信绿点缀 */
+  --ui-bg: #ededed;
+  --ui-bg-soft: #f7f7f7;
+  --ui-surface: #ffffff;
+  --ui-surface-strong: #ffffff;
+  --ui-surface-soft: #fafafa;
+  --ui-border: #e5e5e5;
+  --ui-border-strong: #d9d9d9;
+  --ui-ink: #191919;
+  --ui-muted: #888888;
+  --ui-subtle: #b2b2b2;
+  --ui-primary: #07c160;
+  --ui-primary-soft: #e5f8ee;
+  --ui-teal: #10aeff;
+  --ui-warning: #fa9d3b;
+  --ui-warning-soft: #fef1e2;
+  --ui-danger: #fa5151;
+  --ui-danger-soft: #fdeaea;
+  --ui-violet: #6467f0;
+  --ui-violet-soft: #ebebfd;
+  --ui-blue: #10aeff;
+  --ui-blue-soft: #e6f6ff;
+  --ui-radius-control: 8px;
+  --ui-radius-card: 10px;
+  --ui-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --ui-shadow-md: 0 1px 4px rgba(0, 0, 0, 0.05);
+  --ui-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08);
 
   /* Compatibility aliases for existing business components. */
   --theme-bg: var(--ui-bg);
   --theme-text: var(--ui-ink);
   --theme-primary: var(--ui-primary);
   --theme-secondary: var(--ui-teal);
-  --theme-primary-rgb: 67, 141, 99;
+  --theme-primary-rgb: 7, 193, 96;
   --theme-radius-sm: 6px;
   --theme-radius-md: 8px;
   --theme-radius-lg: var(--ui-radius-card);
@@ -81,17 +82,18 @@ textarea * {
   --theme-sun: #f0c040;
   --theme-gold: #f0c040;
   --theme-wheat: #deb887;
-  --glass-panel: rgba(255, 255, 255, 0.35);
-  --glass-card: var(--ui-surface);
-  --glass-elevated: var(--ui-surface-strong);
-  --glass-input: rgba(255, 255, 255, 0.3);
-  --glass-border: rgba(255, 255, 255, 0.55);
-  --glass-border-strong: rgba(255, 255, 255, 0.7);
-  --glass-highlight: rgba(255, 255, 255, 0.85);
+  /* WeChat 风格：扁平白卡片，无玻璃/模糊 */
+  --glass-panel: #ffffff;
+  --glass-card: #ffffff;
+  --glass-elevated: #ffffff;
+  --glass-input: #f7f7f7;
+  --glass-border: #e5e5e5;
+  --glass-border-strong: #d9d9d9;
+  --glass-highlight: transparent;
   --glass-muted: var(--ui-muted);
-  --glass-shadow: 0 16px 48px rgba(45, 70, 55, 0.18);
-  --glass-blur: blur(22px) saturate(165%);
-  --glass-blur-strong: blur(32px) saturate(175%);
+  --glass-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --glass-blur: none;
+  --glass-blur-strong: none;
 }
 
 ::-webkit-scrollbar-track {
@@ -151,50 +153,13 @@ body {
   background: var(--ui-bg);
 }
 
-/* Aurora background layer — 液态玻璃需要有流动的内容可透 */
+/* WeChat 风格：纯浅灰背景，无极光/纹理 */
 .app-shell::before {
-  content: '';
-  position: fixed;
-  inset: -25% -15% -15% -15%;
-  z-index: -2;
-  background:
-    radial-gradient(40% 46% at 16% 20%, rgba(64, 196, 168, 0.72) 0%, transparent 60%),
-    radial-gradient(38% 44% at 84% 14%, rgba(72, 148, 214, 0.66) 0%, transparent 58%),
-    radial-gradient(48% 54% at 76% 82%, rgba(52, 174, 112, 0.70) 0%, transparent 62%),
-    radial-gradient(42% 48% at 22% 86%, rgba(158, 124, 220, 0.60) 0%, transparent 60%),
-    radial-gradient(50% 40% at 50% 50%, rgba(120, 210, 190, 0.42) 0%, transparent 70%);
-  background-size: 200% 200%;
-  filter: blur(28px) saturate(150%);
-  animation: aurora-drift 22s ease-in-out infinite alternate;
-  will-change: background-position, transform;
+  content: none;
 }
 
-/* Fine grain overlay to keep the frosted surfaces from banding */
 .app-shell::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.5) 0.5px, transparent 0.5px);
-  background-size: 4px 4px;
-  opacity: 0.35;
-  mix-blend-mode: overlay;
-}
-
-@keyframes aurora-drift {
-  0% {
-    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-  }
-  50% {
-    background-position: 40% 30%, 60% 40%, 55% 60%, 45% 55%;
-    transform: translate3d(0, -1.5%, 0) rotate(0.4deg) scale(1.04);
-  }
-  100% {
-    background-position: 100% 100%, 0% 100%, 0% 0%, 100% 0%;
-    transform: translate3d(0, 1%, 0) rotate(-0.4deg) scale(1.02);
-  }
+  content: none;
 }
 
 .liquid-layout,
@@ -263,27 +228,17 @@ body {
   border: 1px solid var(--glass-border) !important;
   border-radius: var(--ui-radius-card) !important;
   background: var(--glass-card) !important;
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.28),
-    var(--ui-shadow-md) !important;
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--ui-shadow-sm) !important;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .cartoon-card:not(.land-card):hover {
   border-color: color-mix(in srgb, var(--theme-primary) 34%, var(--glass-border)) !important;
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.32),
-    var(--theme-shadow-lg) !important;
-  transform: translateY(-1px);
+  box-shadow: var(--ui-shadow-md) !important;
 }
 
 .cartoon-card:not(.land-card):active {
-  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--theme-shadow-sm) !important;
-  transform: translateY(0);
+  box-shadow: var(--ui-shadow-sm) !important;
 }
 
 .farm-card,
@@ -291,30 +246,18 @@ body {
   border: 1px solid var(--glass-border) !important;
   border-radius: var(--ui-radius-card) !important;
   background: var(--glass-card) !important;
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.28),
-    var(--ui-shadow-md) !important;
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--ui-shadow-sm) !important;
 }
 
 .farm-input {
   border-color: var(--glass-border) !important;
   background: var(--glass-input) !important;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
 }
 
 .n-card {
   border-color: var(--glass-border) !important;
   background-color: var(--glass-card) !important;
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.28),
-    var(--ui-shadow-md);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--ui-shadow-sm);
 }
 
 .n-modal,
@@ -324,12 +267,7 @@ body {
 .n-dropdown-menu {
   border: 1px solid var(--glass-border) !important;
   background-color: var(--glass-elevated) !important;
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.3),
-    var(--glass-shadow) !important;
-  -webkit-backdrop-filter: var(--glass-blur-strong);
-  backdrop-filter: var(--glass-blur-strong);
+  box-shadow: var(--glass-shadow) !important;
 }
 
 .n-input,
@@ -635,19 +573,6 @@ select:focus-visible {
   }
 }
 
-@media (max-width: 767px) {
-  .glass-app-header,
-  .app-sidebar,
-  .n-modal,
-  .n-dialog,
-  .n-drawer,
-  .n-popover:not(.n-popover--raw):not(.n-tooltip),
-  .n-dropdown-menu {
-    -webkit-backdrop-filter: blur(12px) saturate(125%);
-    backdrop-filter: blur(12px) saturate(125%);
-  }
-}
-
 @media (prefers-reduced-transparency: reduce) {
   .glass-app-header,
   .app-sidebar,
@@ -656,9 +581,7 @@ select:focus-visible {
   .n-drawer,
   .n-popover:not(.n-popover--raw):not(.n-tooltip),
   .n-dropdown-menu {
-    background: var(--theme-bg) !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+    background: #ffffff !important;
   }
 }
 

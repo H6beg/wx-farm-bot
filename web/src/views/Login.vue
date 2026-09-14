@@ -209,20 +209,11 @@ onMounted(fetchGameVersion)
   overflow: hidden;
   padding: 28px 18px;
   color: var(--ui-ink);
-  background-color: #edf2ea;
-  background-image:
-    linear-gradient(rgba(67, 141, 99, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(67, 141, 99, 0.045) 1px, transparent 1px);
-  background-size: 42px 42px;
+  background: #ededed;
 }
 
 .login-container::before {
-  position: absolute;
-  inset: 8% 7%;
-  border: 1px solid rgba(67, 141, 99, 0.08);
-  border-radius: 36px;
-  background: rgba(255, 255, 255, 0.22);
-  content: '';
+  content: none;
 }
 
 .login-card {
@@ -230,14 +221,10 @@ onMounted(fetchGameVersion)
   z-index: 1;
   width: min(430px, 100%);
   padding: 30px;
-  border: 1px solid rgba(58, 86, 68, 0.14);
-  border-radius: 18px;
-  background: rgba(250, 251, 247, 0.82);
-  box-shadow:
-    0 28px 76px rgba(55, 75, 61, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.94);
-  -webkit-backdrop-filter: blur(24px) saturate(135%);
-  backdrop-filter: blur(24px) saturate(135%);
+  border: 1px solid var(--ui-border);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: var(--ui-shadow-lg);
 }
 
 .logo-area {

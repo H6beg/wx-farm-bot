@@ -27,22 +27,18 @@ const items = [
 .mobile-bottom-nav {
   position: fixed;
   z-index: 35;
-  right: max(14px, env(safe-area-inset-right));
-  bottom: max(12px, env(safe-area-inset-bottom));
-  left: max(14px, env(safe-area-inset-left));
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: none;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  min-height: 66px;
-  padding: 7px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.28);
-  box-shadow:
-    0 16px 44px rgba(45, 70, 55, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.35);
-  -webkit-backdrop-filter: blur(30px) saturate(175%);
-  backdrop-filter: blur(30px) saturate(175%);
+  min-height: 56px;
+  padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+  border: none;
+  border-top: 1px solid var(--ui-border);
+  border-radius: 0;
+  background: #f7f7f7;
+  box-shadow: none;
 }
 
 @media (max-width: 1023px) {
@@ -75,7 +71,7 @@ const items = [
 
 .mobile-bottom-nav__item--active {
   color: var(--ui-primary);
-  background: rgba(225, 241, 230, 0.82);
+  background: transparent;
   box-shadow: none !important;
 }
 </style>

@@ -775,23 +775,16 @@ async function copyToken() {
 <style scoped>
 .app-sidebar {
   color: var(--ui-ink);
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.28);
-  box-shadow:
-    10px 0 44px rgba(45, 70, 55, 0.1),
-    inset -1px 0 0 rgba(255, 255, 255, 0.4),
-    inset 1px 0 0 rgba(255, 255, 255, 0.55);
+  border-right: 1px solid var(--ui-border);
+  background: #ffffff;
   transition:
     transform 0.2s ease,
     width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  -webkit-backdrop-filter: blur(32px) saturate(175%);
-  backdrop-filter: blur(32px) saturate(175%);
 }
 
 .sidebar-brand {
   min-height: 62px;
   border-bottom: 1px solid var(--ui-border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
 .brand-mark {
@@ -805,12 +798,12 @@ async function copyToken() {
   border: 1px solid var(--ui-border);
   border-radius: 12px;
   color: var(--ui-ink);
-  background: rgba(255, 255, 255, 0.56);
+  background: #ffffff;
 }
 
 .sidebar-control:hover {
   border-color: var(--ui-border-strong);
-  background: rgba(255, 255, 255, 0.82);
+  background: #fafafa;
 }
 
 .sidebar-control:focus-visible,
@@ -825,17 +818,13 @@ async function copyToken() {
   border: 1px solid var(--ui-border);
   border-radius: 12px;
   color: var(--ui-ink);
-  background: var(--ui-surface-strong);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    var(--ui-shadow-lg);
-  -webkit-backdrop-filter: blur(18px) saturate(145%);
-  backdrop-filter: blur(18px) saturate(145%);
+  background: #ffffff;
+  box-shadow: var(--ui-shadow-md);
 }
 
 .sidebar-footer {
   border-top: 1px solid var(--ui-border);
-  background: rgba(242, 246, 240, 0.58);
+  background: #fafafa;
 }
 
 .sidebar-footer__compact {
@@ -861,7 +850,7 @@ async function copyToken() {
 
 .sidebar-footer__icon:hover {
   color: var(--ui-primary);
-  background: rgba(230, 241, 232, 0.82);
+  background: #e5f8ee;
 }
 
 .sidebar-status-dot {
@@ -870,7 +859,7 @@ async function copyToken() {
   bottom: 7px;
   width: 7px;
   height: 7px;
-  border: 1.5px solid rgba(250, 251, 247, 0.96);
+  border: 1.5px solid #ffffff;
   border-radius: 999px;
 }
 
@@ -894,7 +883,7 @@ async function copyToken() {
 }
 
 nav a:hover {
-  background: rgba(230, 241, 232, 0.76);
+  background: #e5f8ee;
 }
 
 .nav-icon {
@@ -922,7 +911,7 @@ nav a:hover {
   background: var(--ui-primary-soft) !important;
   color: var(--ui-primary) !important;
   font-weight: 600;
-  box-shadow: inset 0 0 0 1px rgba(67, 141, 99, 0.13) !important;
+  box-shadow: inset 0 0 0 1px rgba(7, 193, 96, 0.12) !important;
   border-radius: 8px;
   opacity: 1 !important;
 }
@@ -935,7 +924,7 @@ nav a:hover {
   background: var(--ui-primary-soft) !important;
   color: var(--ui-primary) !important;
   font-weight: 600;
-  box-shadow: inset 0 0 0 1px rgba(67, 141, 99, 0.13) !important;
+  box-shadow: inset 0 0 0 1px rgba(7, 193, 96, 0.12) !important;
   border-radius: 8px;
   opacity: 1 !important;
 }
@@ -1076,12 +1065,8 @@ nav a:hover {
     border: 1px solid var(--ui-border);
     border-radius: 12px;
     color: var(--ui-ink);
-    background: var(--ui-surface-strong);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.92),
-      var(--ui-shadow-lg);
-    -webkit-backdrop-filter: blur(18px) saturate(145%);
-    backdrop-filter: blur(18px) saturate(145%);
+    background: #ffffff;
+    box-shadow: var(--ui-shadow-md);
   }
 
   .app-sidebar.is-collapsed .sidebar-footer {

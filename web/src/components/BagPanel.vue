@@ -940,7 +940,7 @@ useIntervalFn(loadBag, 60000)
 }
 
 .use-quantity-hint strong {
-  color: var(--theme-primary, #438d63);
+  color: var(--theme-primary, #07c160);
   font-size: 18px;
   line-height: 1;
 }

@@ -90,17 +90,13 @@ function toggleNavigation() {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 8px 10px 0;
-  padding: 8px 9px 8px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow:
-    0 10px 32px rgba(45, 70, 55, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.35);
-  -webkit-backdrop-filter: blur(30px) saturate(175%);
-  backdrop-filter: blur(30px) saturate(175%);
+  margin: 0;
+  padding: 8px 16px;
+  border: none;
+  border-bottom: 1px solid var(--ui-border);
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: none;
 }
 
 .mobile-heading {
@@ -155,14 +151,14 @@ function toggleNavigation() {
 @media (max-width: 1023px) {
   .page-scroll {
     /* Keep the last card/button above the fixed mobile navigation bar. */
-    padding: 14px 12px calc(132px + env(safe-area-inset-bottom));
-    scroll-padding-bottom: calc(132px + env(safe-area-inset-bottom));
+    padding: 14px 12px calc(78px + env(safe-area-inset-bottom));
+    scroll-padding-bottom: calc(78px + env(safe-area-inset-bottom));
   }
 }
 
 @media (max-width: 480px) {
   .glass-app-header {
-    margin-inline: 8px;
+    margin-inline: 0;
   }
 
   .page-scroll {
